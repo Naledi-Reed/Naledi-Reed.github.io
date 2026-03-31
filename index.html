@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecturer Portfolio — INL261 Group Project</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 2rem;
+    }
+    #hero h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #58a6ff;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.3s;
+    }
+    #hero p.tagline {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #8b949e;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.6s;
+    }
+    .avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #58a6ff, #bc8cff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 30px rgba(88, 166, 255, 0.4);
+      animation: pulse 3s ease-in-out infinite;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.1s, pulse 3s ease-in-out infinite 1.5s;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 5rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #about h2 { font-size: 2rem; color: #58a6ff; margin-bottom: 1.5rem; }
+    .bio-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(88,166,255,0.1);
+    }
+    .bio-card p { color: #8b949e; line-height: 1.8; font-size: 1.05rem; }
+
+    /* ── MODULES ── */
+    #modules {
+      padding: 5rem 2rem;
+      background: #0d1117;
+    }
+    #modules h2 { text-align: center; font-size: 2rem; color: #58a6ff; margin-bottom: 2rem; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .module-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .module-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(88,166,255,0.2);
+      border-color: #58a6ff;
+    }
+    .module-card h3 { color: #e6edf3; margin-bottom: 0.5rem; }
+    .module-card p { color: #8b949e; font-size: 0.9rem; }
+
+    /* ── FUN FACTS ── */
+    #facts {
+      padding: 5rem 2rem;
+      background: #161b22;
+      text-align: center;
+    }
+    #facts h2 { font-size: 2rem; color: #58a6ff; margin-bottom: 2rem; }
+    .facts-grid {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; max-width: 800px; margin: 0 auto;
+    }
+    .fact-chip {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 50px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .fact-chip:hover {
+      background: #58a6ff;
+      color: #0d1117;
+      border-color: #58a6ff;
+      transform: scale(1.05);
+    }
+
+    /* ── QUOTES ── */
+    #quotes {
+      padding: 5rem 2rem;
+      background: #0d1117;
+      text-align: center;
+    }
+    #quotes h2 { font-size: 2rem; color: #58a6ff; margin-bottom: 2rem; }
+    .quote-carousel {
+      max-width: 700px;
+      margin: 0 auto;
+      min-height: 100px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .quote-text {
+      font-size: 1.2rem;
+      color: #e6edf3;
+      font-style: italic;
+      line-height: 1.8;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 5rem 2rem;
+      background: #161b22;
+      text-align: center;
+    }
+    #contact h2 { font-size: 2rem; color: #58a6ff; margin-bottom: 2rem; }
+    .contact-card {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .contact-card p { color: #8b949e; margin: 0.5rem 0; }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background: #58a6ff;
+      color: #0d1117;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .cta-btn:hover { background: #79c0ff; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #484f58;
+      font-size: 0.85rem;
+      background: #0d1117;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(88,166,255,0.4); }
+      50%       { box-shadow: 0 0 60px rgba(88,166,255,0.8); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(13,17,23,0.9);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 100;
+      border-bottom: 1px solid #21262d;
+    }
+    nav .logo { color: #58a6ff; font-weight: bold; font-size: 1.1rem; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a { color: #8b949e; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    nav ul li a:hover { color: #58a6ff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav ul { gap: 0.8rem; }
+      nav ul li a { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="logo">Lecturer Portfolio</span>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#modules">Modules</a></li>
+      <li><a href="#facts">Facts</a></li>
+      <li><a href="#quotes">Quotes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="avatar">🎓</div>
+    <h1>[Lecturer Name]</h1>
+    <p class="tagline">[Professional Tagline goes here]</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About & Profile</h2>
+    <div class="bio-card">
+      <p>[Bio content will be added after the social engineering session with the lecturer. Describe their background, teaching philosophy, and what makes them unique.]</p>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section id="modules">
+    <h2>Modules & Expertise</h2>
+    <div class="card-grid">
+      <div class="module-card">
+        <h3>Module Code 1</h3>
+        <p>Module name and brief description goes here.</p>
+      </div>
+      <div class="module-card">
+        <h3>Module Code 2</h3>
+        <p>Module name and brief description goes here.</p>
+      </div>
+      <div class="module-card">
+        <h3>Module Code 3</h3>
+        <p>Module name and brief description goes here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUN FACTS -->
+  <section id="facts">
+    <h2>Fun Facts & Superpowers ⚡</h2>
+    <div class="facts-grid">
+      <div class="fact-chip">🎯 Superpower 1</div>
+      <div class="fact-chip">🌍 Fun Fact 1</div>
+      <div class="fact-chip">💡 Fun Fact 2</div>
+      <div class="fact-chip">🚀 Fun Fact 3</div>
+    </div>
+  </section>
+
+  <!-- QUOTES -->
+  <section id="quotes">
+    <h2>Quote Wall 💬</h2>
+    <div class="quote-carousel">
+      <p class="quote-text" id="quoteDisplay">"Add the lecturer's favorite quotes here after the interview."</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact & Connect</h2>
+    <div class="contact-card">
+      <p>📚 Department: [Department Name]</p>
+      <p>🕐 Office Hours: [Days & Times]</p>
+      <p>🏫 Campus: Belgium Campus iTversity</p>
+      <a href="#" class="cta-btn">Connect with Me</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built with Claude AI + GitHub Pages · INL261 Group Project · Belgium Campus iTversity</p>
+  </footer>
+
+  <script>
+    // Quote carousel
+    const quotes = [
+      "Add the lecturer's favorite quotes here after the interview.",
+      "Each quote will auto-rotate every 4 seconds.",
+      "Replace these placeholders with real quotes from your social engineering session."
+    ];
+    let currentQuote = 0;
+    const quoteDisplay = document.getElementById('quoteDisplay');
+
+    setInterval(() => {
+      quoteDisplay.style.opacity = 0;
+      setTimeout(() => {
+        currentQuote = (currentQuote + 1) % quotes.length;
+        quoteDisplay.textContent = `"${quotes[currentQuote]}"`;
+        quoteDisplay.style.transition = 'opacity 0.6s';
+        quoteDisplay.style.opacity = 1;
+      }, 400);
+    }, 4000);
+
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.module-card, .bio-card, .contact-card').forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
